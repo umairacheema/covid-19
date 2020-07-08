@@ -1,4 +1,4 @@
-## COVID-19 Data Analysis-1
+## COVID-19 Data Analysis-2
 
 The intent of this project is to share rudimentary snippets to analyze and visualize COVID-19 data shared through COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University.
 
@@ -22,6 +22,6 @@ The intent of this project is to share rudimentary snippets to analyze and visua
 <div class="graph">
   <iframe width="800"
           height="600"
-          src="../interactive_plots/confirmed-deaths-world.html"
+          src="https://umairacheema.github.io/covid-19/interactive_plots/confirmed-deaths-world.html"
           frameborder="0" ></iframe>
 </div>

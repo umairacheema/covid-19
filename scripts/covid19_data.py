@@ -126,25 +126,11 @@ def get_continent_data(df_all, item='Confirmed', remove_cruise=True):
       A dataframe with the continent data
     """
 
-    df_grouped = df_all.groupby(['Date','Continent'])[['Confirmed','Recovered','Deaths']].sum()
-    df_unstacked = df_grouped[item].unstack()
+    df_grouped = df_all.groupby(['Date','Continent'])[[item]].sum()
+    df_grouped = df_grouped[item].unstack()
     if(remove_cruise):
-        df_unstacked = df_unstacked.drop(columns=['Cruise'])
-    return df_unstacked
-
-
-def get_continent_breakup(df_all):
-    """Groups covid data by continent and saves in csv
-
-    Args:
-      df_all: A dataframe containing all data
-    """
-
-    confirmed = get_continent_data(df_all).reset_index().set_index('Date')
-    recovered = get_continent_data(df_all, 'Recovered').reset_index().set_index('Date')
-    deaths = get_continent_data(df_all, 'Deaths').reset_index().set_index('Date')
-    df_continents = pd.concat([confirmed, recovered, deaths], axis=1)
-    df_continents.to_csv(os.path.join(cc.DATA_DIR,'continents.csv'))
+        df_grouped = df_grouped.drop(columns=['Cruise'])
+    return df_grouped
 
 
 def get_countries_data(df_all, item='Confirmed'):
@@ -188,13 +174,14 @@ def get_aggregate(df_all):
     total_deaths = df_all.groupby('Date')['Deaths'].sum()[-1]
     df_aggregate = pd.DataFrame({'total_confirmed':[total_confirmed_cases],
                          'total_recovered':[total_recovered_cases],'total_deaths':[total_deaths]})
-    df_aggregate.to_json(os.path.join(cc.DATA_DIR,cc.AGGREGATE), orient='records')
+    return df_aggregate
 
 def main():
     df_data = preprocess_data()
     df_data.to_csv(os.path.join(cc.DATA_DIR, 'covid-all.csv'))
-    get_aggregate(df_data)
-    get_continent_breakup(df_data)
-
+    df_aggregate = get_aggregate(df_data)
+    df_aggregate.to_json(os.path.join(cc.DATA_DIR,cc.AGGREGATE), orient='records')
+    df_continents = get_continent_data(df_data)
+    df_continents.to_csv(os.path.join(cc.DATA_DIR,'continents.csv'))
 if __name__ == "__main__":
     main()

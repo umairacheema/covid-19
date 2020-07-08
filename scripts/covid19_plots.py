@@ -50,6 +50,25 @@ def load_data():
     df_continents = pd.read_csv(continents_data_path)
     return df_all, df_continents
 
+def plot_continents(df, cases='Confirmed'):
+    """Creates line chart to show continent trend
+
+    Args:
+      df: A dataframe containing continent data
+      cases: Confirmed, Deaths or Recovered
+
+    """
+    df['datetime'] = pd.to_datetime(df['Date'])
+    today = df['datetime'].iloc[-1].strftime("%d %b %Y")
+    columns = df.columns
+    fig = go.Figure()
+    for column in columns:
+        if(column not in ['Date','datetime']):
+            fig.add_trace(go.Scatter(x=df.Date, y=df[column], name=column, mode='lines+markers'))
+
+    fig.update_layout(xaxis_title='Date', yaxis_title=cases, title='COVID19 Continent Trend ('+today+')')
+    fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR, cases.lower() + "-continents.html"),
+                    include_plotlyjs = cc.PATH_TO_PLOTLY)
 
 def plot_deaths_confirmed(df,country = None):
     """Creates dual axis line chart to show deaths and confirmed cases
@@ -132,7 +151,7 @@ def get_countries_breakup(df_all):
 def main():
     df_data, df_continents = load_data()
     plot_deaths_confirmed(df_data)
-
+    plot_continents(df_continents)
 
 if __name__ == "__main__":
     main()

@@ -29,6 +29,7 @@ __license__ = "GPL"
 DATA_DIR = '../csse_covid_19_data'
 PLOTS_DIR = '../docs/plots'
 INTERACTIVE_PLOTS_DIR = '../docs/interactive_plots'
+PATH_TO_PLOTLY = '../assets/js/plotly.min.js'
 
 def load_data():
     """Loads data as dataframes
@@ -82,7 +83,7 @@ def plot_deaths_confirmed(df,country = None):
     fig.update_xaxes(title_text="Date") # Set y-axes titles
     fig.update_yaxes(title_text="<b>Confirmed</b>", secondary_y=False)
     fig.update_yaxes(title_text="<b>Deaths</b>", secondary_y=True)
-    fig.write_html(os.path.join(INTERACTIVE_PLOTS_DIR,"confirmed-deaths-world.html"))
+    fig.write_html(os.path.join(INTERACTIVE_PLOTS_DIR,"confirmed-deaths-world.html"), include_plotlyjs = PATH_TO_PLOTLY)
 
 
 def get_continent_breakup(df_all):

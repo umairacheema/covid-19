@@ -22,6 +22,6 @@ The intent of this project is to share rudimentary snippets to analyze and visua
 <div class="graph">
   <iframe width="800"
           height="600"
-          src="./interactive_plots/confirmed-deaths-world.html"
+          src="../interactive_plots/confirmed-deaths-world.html"
           frameborder="0" ></iframe>
 </div>

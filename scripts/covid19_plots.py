@@ -1,6 +1,6 @@
 """Creates interactive and non-interactive plots using preprocessed data
 
-Creates following plots in interactive-plots folder:
+Creates following plots in docs/interactive-plots folder:
 cases-all-confirmed.html         -  Interactive map showing gloal confirmed cases
 cases-all-confirmed-standardized - Interactive map showing global confirmed cases
                                    standardized by population
@@ -27,8 +27,8 @@ __author__ = "Umair Cheema"
 __license__ = "GPL"
 
 DATA_DIR = '../csse_covid_19_data'
-PLOTS_DIR = '../plots'
-INTERACTIVE_PLOTS_DIR = '../interactive_plots'
+PLOTS_DIR = '../docs/plots'
+INTERACTIVE_PLOTS_DIR = '../docs/interactive_plots'
 
 def load_data():
     """Loads data as dataframes

@@ -7,7 +7,7 @@ The intent of this project is to share rudimentary snippets to analyze and visua
 .graph {
   position: relative;
   width: 100%;
-  padding-top: 56.25%;
+  padding-top: 64.28%;
   overflow: hidden;
 }
 .graph-iframe {
@@ -22,5 +22,5 @@ The intent of this project is to share rudimentary snippets to analyze and visua
 </style>
 <div class="graph">
   <iframe class="graph-iframe"
-          src="https://umairacheema.github.io/covid-19/interactive_plots/confirmed-deaths-world.html"></iframe>
+          src="https://umairacheema.github.io/covid-19/interactive_plots/confirmed-deaths-world.html" frameborder="0"></iframe>
 </div>

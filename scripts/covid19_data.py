@@ -16,7 +16,7 @@ import pycountry_convert as pc
 __author__ = "Umair Cheema"
 __license__ = "GPL"
 
-DATA_DIR = 'csse_covid_19_data'
+DATA_DIR = '../csse_covid_19_data'
 
 def preprocess_data():
     """Preprocesses covid-19 data.
@@ -106,9 +106,9 @@ def preprocess_data():
     df_all = df_all.merge(df_pop, left_on='Country/Region', right_on='country')
     df_all = df_all.drop(columns=['Country/Region'])
     df_all = df_all.fillna(0)
-    df_all['std_confirmed'] = df_all['Confirmed']/df_all['population']*1e6
-    df_all['std_recovered'] = df_all['Recovered']/df_all['population']*1e6
-    df_all['std_deaths'] = df_all['Deaths']/df_all['population']*1e6
+    df_all['std_confirmed'] = df_all['Confirmed']/(df_all['population']*1e6)
+    df_all['std_recovered'] = df_all['Recovered']/(df_all['population']*1e6)
+    df_all['std_deaths'] = df_all['Deaths']/(df_all['population']*1e6)
     return df_all
 
 
@@ -118,7 +118,7 @@ def get_continent_data(df_all, item='Confirmed', remove_cruise=True):
     Args:
       df_all: A dataframe containing all data
       item: Confirmed, Recovered or Deaths
-      removeCruise: Removes the cruise specific data from January/February
+      remove_cruise: Removes the cruise specific data from January/February
 
     Returns:
       A dataframe with the continent data

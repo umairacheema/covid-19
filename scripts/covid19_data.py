@@ -3,7 +3,7 @@
 Creates following files in csse_covid_19_data folder:
 covid-all.csv  - Contains countrywise time series data with confirmed cases, recovered cases and
                  deaths standardized by population
-aggregate.csv - Contains total confirmed cases, recovered cases and deaths globally
+aggregate.json - Contains total confirmed cases, recovered cases and deaths globally
 continents.csv - Contains time series data per continent
 """
 
@@ -87,7 +87,9 @@ def preprocess_data():
         elif country in north_america:
             continent = 'NA'
         else:
-            continent = pc.country_alpha2_to_continent_code(pc.country_name_to_country_alpha2(country, cn_name_format="default"))
+            continent = pc.country_alpha2_to_continent_code(
+                                pc.country_name_to_country_alpha2(country,
+                                        cn_name_format="default"))
         if continent is not 'Cruise':
             continent = pc.convert_continent_code_to_continent_name(continent)
         return continent
@@ -184,9 +186,9 @@ def get_aggregate(df_all):
     total_confirmed_cases = df_all.groupby('Date')['Confirmed'].sum()[-1]
     total_recovered_cases = df_all.groupby('Date')['Recovered'].sum()[-1]
     total_deaths = df_all.groupby('Date')['Deaths'].sum()[-1]
-    df_aggregate = pd.DataFrame({'total_confirmed':[total_confirmed_cases], 'total_recovered':[total_recovered_cases],
-                                 'total_deaths':[total_deaths]})
-    df_aggregate.to_csv(os.path.join(cc.DATA_DIR,'aggregate.csv'))
+    df_aggregate = pd.DataFrame({'total_confirmed':[total_confirmed_cases],
+                         'total_recovered':[total_recovered_cases],'total_deaths':[total_deaths]})
+    df_aggregate.to_json(os.path.join(cc.DATA_DIR,'aggregate.json'), orient='records')
 
 def main():
     df_data = preprocess_data()

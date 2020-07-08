@@ -56,7 +56,6 @@ def plot_continents(df, cases='Confirmed'):
     Args:
       df: A dataframe containing continent data
       cases: Confirmed, Deaths or Recovered
-
     """
     df['datetime'] = pd.to_datetime(df['Date'])
     today = df['datetime'].iloc[-1].strftime("%d %b %Y")
@@ -103,49 +102,21 @@ def plot_deaths_confirmed(df,country = None):
                     include_plotlyjs = cc.PATH_TO_PLOTLY)
 
 
-def get_continent_breakup(df_all):
-    """Groups covid data by continent and saves in csv
+def subset_countries(df, countries):
+    """Returns filtered data based on the list of countries
 
     Args:
-      df_all: A dataframe containing all data
-    """
-
-    confirmed = get_continent_data(df_all).reset_index().set_index('Date')
-    recovered = get_continent_data(df_all, 'Recovered').reset_index().set_index('Date')
-    deaths = get_continent_data(df_all, 'Deaths').reset_index().set_index('Date')
-    df_continents = pd.concat([confirmed, recovered, deaths], axis=1)
-    df_continents.to_csv(os.path.join(DATA_DIR,'continents.csv'))
-
-
-def get_countries_data(df_all, item='Confirmed'):
-    """Groups covid data by country
-
-    Args:
-      df_all: A dataframe containing all data
-      item: Confirmed, Recovered or Deaths
-
+      df: A dataframe containing all data
+      countries: List containing countries for data inclusion
     Returns:
-      A dataframe with the country data
+       Dataframe with data for selected countries
     """
-    df_countries = df_all.groupby(['Date','country'])[['Confirmed','Recovered','Deaths']].sum()
-    return df_countries[item].unstack()
+    subset = df
+    if(countries != None):
+        mask = df['country'].isin(countries)
+        subset = df.loc[mask]
+    return subset
 
-
-def get_countries_breakup(df_all):
-    """Groups covid data by countries and saves in csv
-
-    Args:
-      df_all: A dataframe containing all data
-    """
-    confirmed = (get_countries_data(df_all).reset_index()
-                 .set_index('Date'))
-    recovered = (get_countries_data(df_all, 'Recovered').reset_index()
-        .set_index('Date'))
-    deaths = (get_countries_data(df_all, 'Deaths').reset_index()
-        .set_index('Date'))
-
-    df_countries = pd.concat([confirmed, recovered, deaths], axis=1)
-    df_countries.to_csv(os.path.join(cc.DATA_DIR,'countries.csv'))
 
 
 def main():

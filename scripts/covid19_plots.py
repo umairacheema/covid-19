@@ -19,6 +19,7 @@ confirmed-deaths-world.html      - Interactive dual axis plot showing deaths
 import os
 import errno
 import pandas as pd
+import covid19_paths as cc
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -26,10 +27,6 @@ from plotly.subplots import make_subplots
 __author__ = "Umair Cheema"
 __license__ = "GPL"
 
-DATA_DIR = '../csse_covid_19_data'
-PLOTS_DIR = '../docs/plots'
-INTERACTIVE_PLOTS_DIR = '../docs/interactive_plots'
-PATH_TO_PLOTLY = '../assets/js/plotly.min.js'
 
 def load_data():
     """Loads data as dataframes
@@ -41,12 +38,12 @@ def load_data():
       FileNotFoundError: If preprocessed data is not available
     """
     #Set up file paths
-    country_data_path = os.path.join(DATA_DIR,'covid-all.csv')
-    continents_data_path = os.path.join(DATA_DIR,'continents.csv')
+    country_data_path = os.path.join(cc.DATA_DIR,'covid-all.csv')
+    continents_data_path = os.path.join(cc.DATA_DIR,'continents.csv')
     #Check if data is available
     if not os.path.isfile(country_data_path):
         raise FileNotFoundError(errno.ENOENT,
-                                os.strerror(errno.ENOENT), DATA_DIR + '/' + 'covid-all.csv')
+                                os.strerror(errno.ENOENT), cc.DATA_DIR + '/' + 'covid-all.csv')
 
     #Read preprocessed data
     df_all = pd.read_csv(country_data_path)
@@ -83,7 +80,8 @@ def plot_deaths_confirmed(df,country = None):
     fig.update_xaxes(title_text="Date") # Set y-axes titles
     fig.update_yaxes(title_text="<b>Confirmed</b>", secondary_y=False)
     fig.update_yaxes(title_text="<b>Deaths</b>", secondary_y=True)
-    fig.write_html(os.path.join(INTERACTIVE_PLOTS_DIR,"confirmed-deaths-world.html"), include_plotlyjs = PATH_TO_PLOTLY)
+    fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,"confirmed-deaths-world.html"),
+                    include_plotlyjs = cc.PATH_TO_PLOTLY)
 
 
 def get_continent_breakup(df_all):
@@ -128,7 +126,7 @@ def get_countries_breakup(df_all):
         .set_index('Date'))
 
     df_countries = pd.concat([confirmed, recovered, deaths], axis=1)
-    df_countries.to_csv(os.path.join(DATA_DIR,'countries.csv'))
+    df_countries.to_csv(os.path.join(cc.DATA_DIR,'countries.csv'))
 
 
 def main():

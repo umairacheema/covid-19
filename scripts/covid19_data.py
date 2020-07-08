@@ -11,12 +11,12 @@ import os
 import errno
 import pandas as pd
 import pycountry_convert as pc
+import covid19_paths as cc
 
 
 __author__ = "Umair Cheema"
 __license__ = "GPL"
 
-DATA_DIR = '../csse_covid_19_data'
 
 def preprocess_data():
     """Preprocesses covid-19 data.
@@ -30,21 +30,21 @@ def preprocess_data():
 
 
     #Check if data is available
-    if not os.path.isdir(DATA_DIR):
+    if not os.path.isdir(cc.DATA_DIR):
         raise FileNotFoundError(errno.ENOENT,
-                                os.strerror(errno.ENOENT), DATA_DIR)
+                                os.strerror(errno.ENOENT), cc.DATA_DIR)
 
     #Read population and iso code data
-    df_pop = pd.read_csv(os.path.join(DATA_DIR, 'UID_ISO_FIPS_LookUp_Table.csv'))
+    df_pop = pd.read_csv(os.path.join(cc.DATA_DIR, 'UID_ISO_FIPS_LookUp_Table.csv'))
     df_pop = df_pop[df_pop['Province_State'].isnull()]
     df_pop = pd.DataFrame({'iso3':df_pop.iso3, 'country':df_pop.Combined_Key, 'latitude':df_pop.Lat,
                            'longitude':df_pop.Long_, 'population':df_pop.Population})
 
-    df_confirmed = pd.read_csv(os.path.join(DATA_DIR, 'csse_covid_19_time_series',
+    df_confirmed = pd.read_csv(os.path.join(cc.DATA_DIR, 'csse_covid_19_time_series',
                                             'time_series_covid19_confirmed_global.csv'))
-    df_cured = pd.read_csv(os.path.join(DATA_DIR, 'csse_covid_19_time_series',
+    df_cured = pd.read_csv(os.path.join(cc.DATA_DIR, 'csse_covid_19_time_series',
                                         'time_series_covid19_recovered_global.csv'))
-    df_deaths = pd.read_csv(os.path.join(DATA_DIR, 'csse_covid_19_time_series',
+    df_deaths = pd.read_csv(os.path.join(cc.DATA_DIR, 'csse_covid_19_time_series',
                                          'time_series_covid19_deaths_global.csv'))
 
 
@@ -142,7 +142,7 @@ def get_continent_breakup(df_all):
     recovered = get_continent_data(df_all, 'Recovered').reset_index().set_index('Date')
     deaths = get_continent_data(df_all, 'Deaths').reset_index().set_index('Date')
     df_continents = pd.concat([confirmed, recovered, deaths], axis=1)
-    df_continents.to_csv(os.path.join(DATA_DIR,'continents.csv'))
+    df_continents.to_csv(os.path.join(cc.DATA_DIR,'continents.csv'))
 
 
 def get_countries_data(df_all, item='Confirmed'):
@@ -173,7 +173,7 @@ def get_countries_breakup(df_all):
         .set_index('Date'))
 
     df_countries = pd.concat([confirmed, recovered, deaths], axis=1)
-    df_countries.to_csv(os.path.join(DATA_DIR,'countries.csv'))
+    df_countries.to_csv(os.path.join(cc.DATA_DIR,'countries.csv'))
 
 def get_aggregate(df_all):
     """Computes total recovered, confirmed and deaths for covid
@@ -186,11 +186,11 @@ def get_aggregate(df_all):
     total_deaths = df_all.groupby('Date')['Deaths'].sum()[-1]
     df_aggregate = pd.DataFrame({'total_confirmed':[total_confirmed_cases], 'total_recovered':[total_recovered_cases],
                                  'total_deaths':[total_deaths]})
-    df_aggregate.to_csv(os.path.join(DATA_DIR,'aggregate.csv'))
+    df_aggregate.to_csv(os.path.join(cc.DATA_DIR,'aggregate.csv'))
 
 def main():
     df_data = preprocess_data()
-    df_data.to_csv(os.path.join(DATA_DIR, 'covid-all.csv'))
+    df_data.to_csv(os.path.join(cc.DATA_DIR, 'covid-all.csv'))
     get_aggregate(df_data)
     get_continent_breakup(df_data)
 

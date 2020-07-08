@@ -188,7 +188,7 @@ def get_aggregate(df_all):
     total_deaths = df_all.groupby('Date')['Deaths'].sum()[-1]
     df_aggregate = pd.DataFrame({'total_confirmed':[total_confirmed_cases],
                          'total_recovered':[total_recovered_cases],'total_deaths':[total_deaths]})
-    df_aggregate.to_json(os.path.join(cc.DATA_DIR,'aggregate.json'), orient='records')
+    df_aggregate.to_json(os.path.join(cc.DATA_DIR,cc.AGGREGATE), orient='records')
 
 def main():
     df_data = preprocess_data()

@@ -22,10 +22,10 @@ The intent of this project is to share rudimentary snippets to analyze and visua
 </style>
 <div class="graph">
   <iframe class="graph-iframe"
-          src="https://umairacheema.github.io/covid-19/interactive_plots/confirmed-deaths-world.html" frameborder="0"></iframe>
+          src="https://umairacheema.github.io/covid-19/interactive-plots/confirmed-deaths-world.html" frameborder="0"></iframe>
 </div>
 ### Confirmed Cases by Continent
 <div class="graph">
   <iframe class="graph-iframe"
-          src="https://umairacheema.github.io/covid-19/interactive_plots/confirmed-continents.html" frameborder="0"></iframe>
+          src="https://umairacheema.github.io/covid-19/interactive-plots/confirmed-continents.html" frameborder="0"></iframe>
 </div>

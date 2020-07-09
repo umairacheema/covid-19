@@ -100,7 +100,8 @@ def plot_deaths_confirmed(df,country = None):
     fig.update_yaxes(title_text="<b>Deaths</b>", secondary_y=True)
     fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,"confirmed-deaths-world.html"),
                     include_plotlyjs = cc.PATH_TO_PLOTLY)
-
+    fig.write_html(os.path.join(cc.INCLUDES_DIR,"confirmed-deaths-world.html"),
+                    include_plotlyjs = False, full_html = False)
 
 def subset_countries(df, countries):
     """Returns filtered data based on the list of countries

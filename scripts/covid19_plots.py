@@ -84,7 +84,7 @@ def plot_metrics(df_all):
         delta = {'reference':total_deaths[0],'increasing':{'color':'red'}},
         domain = {'row': 0, 'column': 2}))
 
-    fig.update_layout(grid = {'rows': 1, 'columns': 3, 'pattern': "independent"},
+    fig.update_layout(grid = {'rows': 1, 'columns': 3, 'pattern': "coupled"},
                       title=today)
     fig.write_html(os.path.join(cc.INCLUDES_DIR,"metrics.html"),
                     include_plotlyjs = False, full_html = False)

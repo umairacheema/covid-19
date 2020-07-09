@@ -182,7 +182,7 @@ def main():
     df_data = preprocess_data()
     df_data.to_csv(os.path.join(cc.DATA_DIR, 'covid-all.csv'))
     df_aggregate = get_aggregate(df_data)
-    df_aggregate.to_json(os.path.join(cc.DATA_DIR,cc.AGGREGATE), orient='records')
+    df_aggregate.to_json(os.path.join(cc.DATA_DIR,'aggregate.json'), orient='records')
     df_continents = get_continent_data(df_data)
     df_continents.to_csv(os.path.join(cc.DATA_DIR,'continents.csv'))
 if __name__ == "__main__":

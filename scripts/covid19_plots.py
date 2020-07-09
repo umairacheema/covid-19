@@ -68,6 +68,8 @@ def plot_continents(df, cases='Confirmed'):
     fig.update_layout(xaxis_title='Date', yaxis_title=cases, title='COVID19 Continent Trend ('+today+')')
     fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR, cases.lower() + "-continents.html"),
                     include_plotlyjs = cc.PATH_TO_PLOTLY)
+    fig.write_html(os.path.join(cc.INCLUDES_DIR,cases.lower() + "-continents.html"),
+                    include_plotlyjs = False, full_html = False)
 
 def plot_deaths_confirmed(df,country = None):
     """Creates dual axis line chart to show deaths and confirmed cases

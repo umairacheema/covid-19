@@ -10,7 +10,5 @@ The intent of this project is to share rudimentary snippets to analyze and visua
   {% include confirmed-deaths-world.html %}
 
 ### Confirmed Cases by Continent
-<div class="graph">
-  <iframe class="graph-iframe"
-          src="https://umairacheema.github.io/covid-19/interactive-plots/confirmed-continents.html" frameborder="0"></iframe>
-</div>
+
+  {% include confirmed-continents.html %}

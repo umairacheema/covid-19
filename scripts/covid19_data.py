@@ -169,10 +169,12 @@ def get_aggregate(df_all):
     Args:
       df_all: A dataframe containing all the data
     """
+    df_all['datetime'] = pd.to_datetime(df_all['Date'])
+    today = df_all['datetime'].iloc[-1].strftime("%d %b %Y")
     total_confirmed_cases = df_all.groupby('Date')['Confirmed'].sum()[-1]
     total_recovered_cases = df_all.groupby('Date')['Recovered'].sum()[-1]
     total_deaths = df_all.groupby('Date')['Deaths'].sum()[-1]
-    df_aggregate = pd.DataFrame({'total_confirmed':[total_confirmed_cases],
+    df_aggregate = pd.DataFrame({'date':[today],'total_confirmed':[total_confirmed_cases],
                          'total_recovered':[total_recovered_cases],'total_deaths':[total_deaths]})
     return df_aggregate
 

@@ -57,15 +57,14 @@ def plot_continents(df, cases='Confirmed'):
       df: A dataframe containing continent data
       cases: Confirmed, Deaths or Recovered
     """
-    df['datetime'] = pd.to_datetime(df['Date'])
-    today = df['datetime'].iloc[-1].strftime("%d %b %Y")
+
     columns = df.columns
     fig = go.Figure()
     for column in columns:
         if(column not in ['Date','datetime']):
             fig.add_trace(go.Scatter(x=df.Date, y=df[column], name=column, mode='lines+markers'))
 
-    fig.update_layout(xaxis_title='Date', yaxis_title=cases, title='COVID19 Continent Trend ('+today+')')
+    fig.update_layout(xaxis_title='Date', yaxis_title=cases, title='COVID19 Continent Trend')
     fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR, cases.lower() + "-continents.html"),
                     include_plotlyjs = cc.PATH_TO_PLOTLY)
     fig.write_html(os.path.join(cc.INCLUDES_DIR,cases.lower() + "-continents.html"),
@@ -79,8 +78,6 @@ def plot_deaths_confirmed(df,country = None):
       country: Name of the country - By default shows global data in plot
 
     """
-    df['datetime'] = pd.to_datetime(df['Date'])
-    today = df['datetime'].iloc[-1].strftime("%d %b %Y")
     if (country):
         df_country = df[df['country']== country]
     else:
@@ -95,7 +92,7 @@ def plot_deaths_confirmed(df,country = None):
     fig.add_trace( go.Scatter(x=df_country.Date, y=df_country['Confirmed'], name="Confirmed Cases"), secondary_y=False, )
     fig.add_trace( go.Scatter(x=df_country.Date, y=df_country['Deaths'], name="Deaths"), secondary_y=True, )
     # Add figure title
-    fig.update_layout( title_text=country+"(COVID-19) - "+today )
+    fig.update_layout( title_text=country )
     # Set x-axis title
     fig.update_xaxes(title_text="Date") # Set y-axes titles
     fig.update_yaxes(title_text="<b>Confirmed</b>", secondary_y=False)

@@ -50,6 +50,45 @@ def load_data():
     df_continents = pd.read_csv(continents_data_path)
     return df_all, df_continents
 
+def plot_metrics(df_all):
+    """Creates metrics visualization
+
+    Args:
+      df: A dataframe containing continent data
+    """
+    today = pd.to_datetime(df_all['Date']).iloc[-1].strftime("%d %b %Y")
+    total_confirmed_cases = df_all.groupby('Date')['Confirmed'].sum()[-2:]
+    total_recovered_cases = df_all.groupby('Date')['Recovered'].sum()[-2:]
+    total_deaths = df_all.groupby('Date')['Deaths'].sum()[-2:]
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Indicator(
+        title = 'Confirmed',
+        mode = "number+delta",
+        value = total_confirmed_cases[1],
+        delta = {'reference':total_confirmed_cases[0],'increasing':{'color':'red'}},
+        domain = {'row': 0, 'column': 0}))
+
+    fig.add_trace(go.Indicator(
+        title = 'Recovered',
+        mode = "number+delta",
+        value = total_recovered_cases[1],
+        delta = {'reference':total_recovered_cases[0]},
+        domain = {'row': 0, 'column': 1}))
+
+    fig.add_trace(go.Indicator(
+        title = 'Deaths',
+        mode = "number+delta",
+        value = total_deaths[1],
+        delta = {'reference':total_deaths[0],'increasing':{'color':'red'}},
+        domain = {'row': 0, 'column': 2}))
+
+    fig.update_layout(grid = {'rows': 1, 'columns': 3, 'pattern': "independent"},
+                      title=today)
+    fig.write_html(os.path.join(cc.INCLUDES_DIR,"metrics.html"),
+                    include_plotlyjs = False, full_html = False)
+
 def plot_continents(df, cases='Confirmed'):
     """Creates line chart to show continent trend
 
@@ -121,6 +160,7 @@ def subset_countries(df, countries):
 
 def main():
     df_data, df_continents = load_data()
+    plot_metrics(df_data)
     plot_deaths_confirmed(df_data)
     plot_continents(df_continents)
 

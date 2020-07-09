@@ -1,3 +1,4 @@
+<script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
 <script src="{{ base.url | prepend: site.url }}/assets/js/plotly.min.js"></script>
 ## COVID-19 Data Analysis
 
@@ -5,9 +6,9 @@ The intent of this project is to share rudimentary snippets to analyze and visua
 
 ### Confirmed Cases and Deaths (Aggregated)
 
-<div class="graph">
+
   {% include confirmed-deaths-world.html %}
-</div>
+
 ### Confirmed Cases by Continent
 <div class="graph">
   <iframe class="graph-iframe"

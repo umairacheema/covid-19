@@ -4,7 +4,7 @@
 
 The intent of this project is to share simple python scripts to visualize COVID-19 data shared through COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University.
 
-** All visualizations including maps are interactive. **
+**All visualizations including maps are interactive.**
 
 ### Global Confirmed Cases and Deaths
   {% include metrics.html %}
@@ -20,6 +20,7 @@ The intent of this project is to share simple python scripts to visualize COVID-
   {% include confirmed-continents.html %}
   [Full Screen](https://umairacheema.github.io/covid-19/interactive-plots/confirmed-continents.html)
 ### Comparison of COVID-19 metrics for 10 most populous countries
+ __Circle size represents number of deaths per 100 Thousand persons__ 
   {% include cases-populous-standardized.html %}
   [Full Screen](https://umairacheema.github.io/covid-19/interactive-plots/cases-populous-standardized.html)
 ### Global Confirmed Cases, Recovered Cases and deaths (Latest)

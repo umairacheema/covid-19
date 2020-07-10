@@ -119,6 +119,45 @@ def plot_scatter_map(df,map_style='open-street-map',cases='Confirmed'):
     fig.write_html(os.path.join(cc.INCLUDES_DIR,'cases-'+ cases.lower() + '-global.html'),
                     include_plotlyjs = False, full_html = False, auto_play=False)
 
+def plot_bubble_countries(df, countries, start_date='2020-03-11', filename='bubble_plot_countries.html'):
+    """Creates animated bubble map to show standardized covid metrics for countries
+
+    Args:
+      df: A dataframe containing continent data
+      countries: A list of countries to include
+      filename: Name of the output file
+
+      start_date: A str with the start date in YYYY-MM-DD format
+    """
+    df_subset = subset_countries(df, countries)
+    df_subset['Date'] = df_subset['Date'].astype('datetime64')
+    df_subset = df_subset[(df_subset['Date']>=pd.to_datetime(start_date))]
+    fig = px.scatter(df_subset, x='std_confirmed', y='std_recovered',size='std_deaths',text='country',
+                 size_max=100,animation_group='country',animation_frame='date_',
+                 range_y=[1,df_subset['std_recovered'].max()+1e4],range_x=[1,df_subset['std_confirmed'].max()+1e4],
+                 color='country',log_x=True,log_y=True,
+                 hover_data={'std_confirmed':':.2f','std_recovered':':.2f','std_deaths':':.2f'})
+    fig.update_xaxes(title_text='Confirmed Cases per 100 Thousand People')
+    fig.update_yaxes(title_text='Recovered Cases per 100 Thousand people')
+    fig.update_layout(height=450)
+    fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,filename),
+                include_plotlyjs = cc.PATH_TO_PLOTLY, auto_play=False)
+    fig.write_html(os.path.join(cc.INCLUDES_DIR,filename),
+                    include_plotlyjs = False, full_html = False, auto_play=False)
+
+
+def plot_populous_countries(df):
+    """Creates animated bubble map to show standardized covid metrics for
+       countries with high population
+
+    Args:
+      df: A dataframe containing continent data
+    """
+    countries = ['China','India','US','Indonesia','Pakistan','Brazil',
+                        'Nigeria','Bangladesh','Russia','Mexico']
+    filename = 'cases-populous-standardized.html'
+    plot_bubble_countries(df,countries, start_date='2020-04-01', filename=filename)
+
 
 def plot_continents(df, cases='Confirmed'):
     """Creates line chart to show continent trend
@@ -197,6 +236,6 @@ def main():
     plot_continents(df_continents)
     plot_scatter_map(df_data)
     plot_scatter_map(df_data, map_style='carto-darkmatter', cases='std_confirmed')
-
+    plot_populous_countries(df_data)
 if __name__ == "__main__":
     main()

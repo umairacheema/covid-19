@@ -9,6 +9,7 @@ continents.csv - Contains time series data per continent
 
 import os
 import errno
+import numpy as np
 import pandas as pd
 import pycountry_convert as pc
 import covid19_paths as cc
@@ -111,6 +112,8 @@ def preprocess_data():
     df_all['std_confirmed'] = (df_all['Confirmed']/df_all['population'])*1e5
     df_all['std_recovered'] = (df_all['Recovered']/df_all['population'])*1e5
     df_all['std_deaths'] = (df_all['Deaths']/df_all['population'])*1e5
+    df_all = df_all.replace([np.inf, -np.inf], np.nan)
+    df_all = df_all.fillna(0)
     return df_all
 
 

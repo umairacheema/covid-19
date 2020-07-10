@@ -18,7 +18,6 @@ confirmed-deaths-world.html      - Interactive dual axis plot showing deaths
 """
 import os
 import errno
-import numpy as np
 import pandas as pd
 import covid19_paths as cc
 import plotly.express as px
@@ -107,8 +106,7 @@ def plot_scatter_map(df,map_style='open-street-map',cases='Confirmed'):
              std_confirmed, std_deaths, std_recovered
              (std_ shows that values are per 100K of population)
     """
-    df = df.replace([np.inf, -np.inf], np.nan)
-    df = df.fillna(0)
+
     fig = px.scatter_mapbox(df, lat="latitude",lon="longitude",
         animation_frame='date_', animation_group='country', color='Continent',
         hover_name='country',size=cases, size_max=50,zoom=1, height=600,
@@ -145,6 +143,42 @@ def plot_bubble_countries(df, countries, start_date='2020-03-11', filename='bubb
     fig.write_html(os.path.join(cc.INCLUDES_DIR,filename),
                     include_plotlyjs = False, full_html = False, auto_play=False)
 
+def plot_3d_scatter(df,countries=None,filename='3d-scatter.html',date=None):
+    """Creates 3d scatter plot to show standardized covid metrics for countries
+
+    Args:
+      df: A dataframe containing continent data
+      countries: A list of countries to include
+      filename: Name of the output file
+      date: A str with the date in YYYY-MM-DD format
+           if not given uses the latest information
+    """
+    if countries is not None:
+        df =  subset_countries(df, countries)
+
+    if date is None:
+        date = df['Date'].iloc[-1]
+
+    df['Date'] = pd.to_datetime(df['Date'])
+
+    df = df[(df['Date'] == pd.to_datetime(date))]
+    today = df['Date'].iloc[-1].strftime("%d %b %Y")
+
+    fig = px.scatter_3d(df, x='std_confirmed', y='std_recovered', z='std_deaths', color='Continent',
+                   hover_data={'Continent':False,'country':True,'std_confirmed':':.3s',
+                   'std_recovered':':.3s','std_deaths':':.3s'})
+    fig.update_layout(scene = dict(
+                    xaxis_title='Confirmed Cases per 100 Thousand',
+                    yaxis_title='Recovered Cases per 100 Thousand',
+                    zaxis_title='Deaths per 100 Thousand'),
+                    width=700,
+                    title=today,
+                    margin=dict(r=20, b=10, l=10, t=10))
+    fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,filename),
+                include_plotlyjs = cc.PATH_TO_PLOTLY, auto_play=False)
+    fig.write_html(os.path.join(cc.INCLUDES_DIR,filename),
+                    include_plotlyjs = False, full_html = False, auto_play=False)
+
 
 def plot_populous_countries(df):
     """Creates animated bubble map to show standardized covid metrics for
@@ -157,6 +191,8 @@ def plot_populous_countries(df):
                         'Nigeria','Bangladesh','Russia','Mexico']
     filename = 'cases-populous-standardized.html'
     plot_bubble_countries(df,countries, start_date='2020-04-01', filename=filename)
+
+
 
 
 def plot_continents(df, cases='Confirmed'):
@@ -237,5 +273,6 @@ def main():
     plot_scatter_map(df_data)
     plot_scatter_map(df_data, map_style='carto-darkmatter', cases='std_confirmed')
     plot_populous_countries(df_data)
+    plot_3d_scatter(df_data,filename='cases-today-global.html')
 if __name__ == "__main__":
     main()

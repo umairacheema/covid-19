@@ -19,9 +19,10 @@ __author__ = "Umair Cheema"
 __license__ = "GPL"
 
 
-def preprocess_data():
+def preprocess_data(remove_cruise=True):
     """Preprocesses covid-19 data.
-
+    Args:
+      remove_cruise: Removes the cruise specific data from January/February
     Returns:
       A dataframe with preprocesses data
 
@@ -100,6 +101,10 @@ def preprocess_data():
     df_all = df_all.fillna(0)
     df_all['Date'] = pd.to_datetime(df_all.Date)
     df_all['date_'] = pd.to_datetime(df_all.Date).dt.date.values.astype('str')
+    #Remove Cruise data if required
+    if(remove_cruise):
+        cruise_indices = df_all[ df_all['Continent'] == 'Cruise' ].index
+        df_all.drop(cruise_indices , inplace=True)
     #Remove negative values
     df_all['Confirmed'].mask(df_all['Confirmed'] < 0, 0, inplace=True)
     df_all['Recovered'].mask(df_all['Recovered'] < 0, 0, inplace=True)
@@ -114,16 +119,16 @@ def preprocess_data():
     df_all['std_deaths'] = (df_all['Deaths']/df_all['population'])*1e5
     df_all = df_all.replace([np.inf, -np.inf], np.nan)
     df_all = df_all.fillna(0)
+
     return df_all
 
 
-def get_continent_data(df_all, item='Confirmed', remove_cruise=True):
+def get_continent_data(df_all, item='Confirmed'):
     """Groups covid data by continent
 
     Args:
       df_all: A dataframe containing all data
       item: Confirmed, Recovered or Deaths
-      remove_cruise: Removes the cruise specific data from January/February
 
     Returns:
       A dataframe with the continent data
@@ -131,8 +136,7 @@ def get_continent_data(df_all, item='Confirmed', remove_cruise=True):
 
     df_grouped = df_all.groupby(['Date','Continent'])[[item]].sum()
     df_grouped = df_grouped[item].unstack()
-    if(remove_cruise):
-        df_grouped = df_grouped.drop(columns=['Cruise'])
+    
     return df_grouped
 
 

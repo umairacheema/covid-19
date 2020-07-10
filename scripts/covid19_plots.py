@@ -117,7 +117,7 @@ def plot_scatter_map(df,map_style='open-street-map',cases='Confirmed'):
     fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,'cases-'+ cases.lower()
                     + '-global.html'),include_plotlyjs = cc.PATH_TO_PLOTLY, auto_play=False)
     fig.write_html(os.path.join(cc.INCLUDES_DIR,'cases-'+ cases.lower() + '-global.html'),
-                    include_plotlyjs = False, full_html = False)
+                    include_plotlyjs = False, full_html = False, auto_play=False)
 
 
 def plot_continents(df, cases='Confirmed'):

@@ -2,7 +2,7 @@
 <script src="{{ base.url | prepend: site.url }}/covid-19/assets/js/plotly.min.js"></script>
 ## COVID-19 Data Analysis
 
-The intent of this project is to share rudimentary snippets to analyze and visualize COVID-19 data shared through COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University.
+The intent of this project is to share simple python scripts to visualize COVID-19 data shared through COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University.
 
 ### Global Confirmed Cases and Deaths
   {% include metrics.html %}

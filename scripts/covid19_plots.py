@@ -89,7 +89,7 @@ def plot_metrics(df_all):
         domain = {'row': 0, 'column': 2}))
 
     fig.update_layout(grid = {'rows': 1, 'columns': 3, 'pattern': "coupled"},
-        title='<i>Data updated until: </i>'+today,margin=dict(l=20,r=20)
+        title='<i>Last update: </i>'+today,margin=dict(l=20,r=20)
         )
     fig.write_html(os.path.join(cc.INCLUDES_DIR,"metrics.html"),
                     include_plotlyjs = False, full_html = False)

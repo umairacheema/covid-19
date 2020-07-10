@@ -196,6 +196,7 @@ def main():
     plot_deaths_confirmed(df_data)
     plot_continents(df_continents)
     plot_scatter_map(df_data)
+    plot_scatter_map(df_data, map_style='carto-darkmatter', cases='std_confirmed')
 
 if __name__ == "__main__":
     main()

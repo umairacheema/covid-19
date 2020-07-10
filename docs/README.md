@@ -18,4 +18,4 @@ The intent of this project is to share rudimentary snippets to analyze and visua
   {% include confirmed-continents.html %}
 
 ### Comparison of COVID-19 metrics for 10 most populous countries
-    {% include cases-populous-standardized.html %}
+  {% include cases-populous-standardized.html %}

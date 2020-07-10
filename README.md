@@ -32,7 +32,7 @@ python covid19_plot.py
 
 The plots will be generated under docs/interactive-plots directory.
 
-Live Demo is available at [COVID-19](https://umairacheema.github.io/covid-19).
+ Demo is available at [COVID-19](https://umairacheema.github.io/covid-19).
 
 ## Prerequisites
 - Anaconda

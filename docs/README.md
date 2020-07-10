@@ -4,6 +4,8 @@
 
 The intent of this project is to share simple python scripts to visualize COVID-19 data shared through COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University.
 
+** All visualizations including maps are interactive. **
+
 ### Global Confirmed Cases and Deaths
   {% include metrics.html %}
   {% include confirmed-deaths-global.html %}

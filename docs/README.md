@@ -9,7 +9,7 @@ The intent of this project is to share rudimentary snippets to analyze and visua
   {% include confirmed-deaths-world.html %}
 
 ### Global Confirmed Cases over Time
-  {% cases-confirmed-global.html %}
+  {% include cases-confirmed-global.html %}
 
 ### Confirmed Cases by Continent
   {% include confirmed-continents.html %}

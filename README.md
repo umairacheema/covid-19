@@ -1,6 +1,6 @@
 ## COVID-19 Data Analysis
 
-The intent of this project is to share simple python scripts to visualize COVID-19 data shared through COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University.The [data respository](https://github.com/CSSEGISandData/COVID-19) is updated by CSSE of Johns Hopkins University using public data sources on daily basis. 
+The intent of this project is to share simple python scripts to visualize COVID-19 data shared through COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University.The upstream [data respository](https://github.com/CSSEGISandData/COVID-19) is updated by CSSE of Johns Hopkins University using public data sources on daily basis. This repository only contains the scripts to generate visualizations and not the data itself.
 
 There are two main python scripts.
 - covid19_data.py

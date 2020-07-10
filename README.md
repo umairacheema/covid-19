@@ -40,4 +40,4 @@ Live Demo is available at [COVID-19](https://umairacheema.github.io/covid-19).
 - pycountry-convert
 
 ## License
-The scripts are licensed under Creative Commons Attribution 4.0. 
+The scripts are licensed under GNU General Public License v3.0

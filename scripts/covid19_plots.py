@@ -13,7 +13,7 @@ cases-populous-standardized.html -  Interactive bubble map showing cases for
                                     most populous countries standardized by
                                     population
 
-confirmed-deaths-world.html      - Interactive dual axis plot showing deaths
+confirmed-deaths-global.html      - Interactive dual axis plot showing deaths
                                    and confirmed cases
 """
 import os
@@ -225,7 +225,7 @@ def plot_deaths_confirmed(df,country = None):
     if (country):
         df_country = df[df['country']== country]
     else:
-        country = 'World'
+        country = 'Global'
         date = df.groupby('Date')[['Confirmed']].sum().reset_index()['Date']
         confirmed = df.groupby('Date')[['Confirmed']].sum().reset_index()['Confirmed']
         deaths = df.groupby('Date')[['Deaths']].sum().reset_index()['Deaths']
@@ -235,15 +235,14 @@ def plot_deaths_confirmed(df,country = None):
     # Add traces
     fig.add_trace( go.Scatter(x=df_country.Date, y=df_country['Confirmed'], name="Confirmed Cases"), secondary_y=False, )
     fig.add_trace( go.Scatter(x=df_country.Date, y=df_country['Deaths'], name="Deaths"), secondary_y=True, )
-    # Add figure title
-    fig.update_layout( title_text=country )
-    # Set x-axis title
-    fig.update_xaxes(title_text="Date") # Set y-axes titles
+
+    # Set axes titles
+    fig.update_xaxes(title_text="Date") #
     fig.update_yaxes(title_text="<b>Confirmed</b>", secondary_y=False)
     fig.update_yaxes(title_text="<b>Deaths</b>", secondary_y=True)
-    fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,"confirmed-deaths-world.html"),
+    fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,"confirmed-deaths-global.html"),
                     include_plotlyjs = cc.PATH_TO_PLOTLY)
-    fig.write_html(os.path.join(cc.INCLUDES_DIR,"confirmed-deaths-world.html"),
+    fig.write_html(os.path.join(cc.INCLUDES_DIR,"confirmed-deaths-global.html"),
                     include_plotlyjs = False, full_html = False)
 
 def subset_countries(df, countries):

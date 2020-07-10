@@ -6,7 +6,7 @@ The intent of this project is to share rudimentary snippets to analyze and visua
 
 ### Global Confirmed Cases and Deaths
   {% include metrics.html %}
-  {% include confirmed-deaths-world.html %}
+  {% include confirmed-deaths-global.html %}
 
 ### Global Confirmed Cases over Time
   {% include cases-confirmed-global.html %}

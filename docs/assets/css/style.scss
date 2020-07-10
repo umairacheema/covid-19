@@ -3,18 +3,9 @@
 
 @import "{{ site.theme }}";
 
-.graph {
-  position: relative;
-  width: 100%;
-  padding-top: 64.28%;
-  overflow: hidden;
-}
-.graph-iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
+.main-content {
+	max-width: 80rem;
+	padding: 2rem 2rem;
+	margin: 0 auto;
+	font-size: 1.1rem;
 }

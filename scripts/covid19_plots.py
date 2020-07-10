@@ -113,7 +113,7 @@ def plot_scatter_map(df,map_style='open-street-map',cases='Confirmed'):
         animation_frame='date_', animation_group='country', color='Continent',
         hover_name='country',size=cases, size_max=50,zoom=1, height=600,
         hover_data={cases:':.3s','latitude':False,'longitude':False})
-    fig.update_layout(showlegend=True, mapbox_style='open-street-map')
+    fig.update_layout(showlegend=True, mapbox_style=map_style)
     fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,'cases-'+ cases.lower()
                     + '-global.html'),include_plotlyjs = cc.PATH_TO_PLOTLY, auto_play=False)
     fig.write_html(os.path.join(cc.INCLUDES_DIR,'cases-'+ cases.lower() + '-global.html'),

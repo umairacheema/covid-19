@@ -108,9 +108,9 @@ def preprocess_data():
     df_all = df_all.merge(df_pop, left_on='Country/Region', right_on='country')
     df_all = df_all.drop(columns=['Country/Region'])
     df_all = df_all.fillna(0)
-    df_all['std_confirmed'] = df_all['Confirmed']/(df_all['population']*1e6)
-    df_all['std_recovered'] = df_all['Recovered']/(df_all['population']*1e6)
-    df_all['std_deaths'] = df_all['Deaths']/(df_all['population']*1e6)
+    df_all['std_confirmed'] = df_all['Confirmed']/(df_all['population']*1e5)
+    df_all['std_recovered'] = df_all['Recovered']/(df_all['population']*1e5)
+    df_all['std_deaths'] = df_all['Deaths']/(df_all['population']*1e5)
     return df_all
 
 

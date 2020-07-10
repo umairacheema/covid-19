@@ -1,23 +1,24 @@
 """Creates interactive and non-interactive plots using preprocessed data
 
 Creates following plots in docs/interactive-plots folder:
-cases-all-confirmed.html         -  Interactive map showing gloal confirmed cases
-cases-all-confirmed-standardized - Interactive map showing global confirmed cases
-                                   standardized by population
-cases-all-deaths.html            -  Interactive map showing global deaths
-cases-all-deaths-standardized    - Interactive map showing global deaths
-                                   standardized by population
-cases-populous.html              - Interactive bubble map showing
-                                   cases for most populous countries
-cases-populous-standardized.html - Interactive bubble map showing cases for
-                                   most populous countries standardized by
-                                   population
+cases-confirmed-global.html      -  Interactive map showing gloal confirmed cases
+cases-std_confirmed-global.html  -  Interactive map showing global confirmed cases
+                                    standardized by population
+cases-deaths-global.html         -  Interactive map showing global deaths
+cases-std_deaths-global.html     -  Interactive map showing global deaths
+                                    standardized by population
+cases-populous.html              -  Interactive bubble map showing
+                                    cases for most populous countries
+cases-populous-standardized.html -  Interactive bubble map showing cases for
+                                    most populous countries standardized by
+                                    population
 
 confirmed-deaths-world.html      - Interactive dual axis plot showing deaths
                                    and confirmed cases
 """
 import os
 import errno
+import numpy as np
 import pandas as pd
 import covid19_paths as cc
 import plotly.express as px
@@ -95,6 +96,29 @@ def plot_metrics(df_all):
                     include_plotlyjs = False, full_html = False)
 
 
+def plot_scatter_map(df,map_style='open-street-map',cases='Confirmed'):
+    """Creates map to show absolute covid19 metric over time
+
+    Args:
+      df: A dataframe containing continent data
+      map_style: Style of the Mapbox basemap
+                 e.g. carto-positron, carto-darkmatter, stamen-terrain etc
+      cases: A metric e.g. Confirmed, Deaths, Recovered,
+             std_confirmed, std_deaths, std_recovered
+             (std_ shows that values are per 100K of population)
+    """
+    df = df.replace([np.inf, -np.inf], np.nan)
+    df = df.fillna(0)
+    fig = px.scatter_mapbox(df, lat="latitude",lon="longitude",
+        animation_frame='date_', animation_group='country', color='Continent',
+        hover_name='country',size=cases, size_max=50,zoom=1)
+    fig.update_layout(showlegend=False, mapbox_style='open-street-map')
+    fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,'cases-'+ cases.lower()
+                    + '-global.html'),include_plotlyjs = cc.PATH_TO_PLOTLY)
+    fig.write_html(os.path.join(cc.INCLUDES_DIR,'cases-'+ cases.lower() + '-global.html'),
+                    include_plotlyjs = False, full_html = False)
+
+
 def plot_continents(df, cases='Confirmed'):
     """Creates line chart to show continent trend
 
@@ -114,6 +138,7 @@ def plot_continents(df, cases='Confirmed'):
                     include_plotlyjs = cc.PATH_TO_PLOTLY)
     fig.write_html(os.path.join(cc.INCLUDES_DIR,cases.lower() + "-continents.html"),
                     include_plotlyjs = False, full_html = False)
+
 
 def plot_deaths_confirmed(df,country = None):
     """Creates dual axis line chart to show deaths and confirmed cases
@@ -169,6 +194,7 @@ def main():
     plot_metrics(df_data)
     plot_deaths_confirmed(df_data)
     plot_continents(df_continents)
+    plot_scatter_map(df_data)
 
 if __name__ == "__main__":
     main()

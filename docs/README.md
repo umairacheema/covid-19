@@ -20,5 +20,5 @@ The intent of this project is to share rudimentary snippets to analyze and visua
 ### Comparison of COVID-19 metrics for 10 most populous countries
   {% include cases-populous-standardized.html %}
 
-### Global Confirmed Cases, Recovered Cases and deaths
+### Global Confirmed Cases, Recovered Cases and deaths (Latest)
   {% include cases-today-global.html %}

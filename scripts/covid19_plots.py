@@ -162,7 +162,7 @@ def plot_3d_scatter(df,countries=None,filename='3d-scatter.html',date=None):
     df['Date'] = pd.to_datetime(df['Date'])
 
     df = df[(df['Date'] == pd.to_datetime(date))]
-    today = df['Date'].iloc[-1].strftime("%d %b %Y")
+
 
     fig = px.scatter_3d(df, x='std_confirmed', y='std_recovered', z='std_deaths', color='Continent',
                    hover_data={'Continent':False,'country':True,'std_confirmed':':.3s',
@@ -171,8 +171,6 @@ def plot_3d_scatter(df,countries=None,filename='3d-scatter.html',date=None):
                     xaxis_title='Confirmed Cases per 100 Thousand',
                     yaxis_title='Recovered Cases per 100 Thousand',
                     zaxis_title='Deaths per 100 Thousand'),
-                    width=700,
-                    title=today,
                     margin=dict(r=20, b=10, l=10, t=10))
     fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,filename),
                 include_plotlyjs = cc.PATH_TO_PLOTLY, auto_play=False)

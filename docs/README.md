@@ -11,5 +11,8 @@ The intent of this project is to share rudimentary snippets to analyze and visua
 ### Global Confirmed Cases over Time
   {% include cases-confirmed-global.html %}
 
+### Global Confirmed Cases Per 100,000 of population
+  {% include cases-std_confirmed-global.html %}
+
 ### Confirmed Cases by Continent
   {% include confirmed-continents.html %}

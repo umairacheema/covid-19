@@ -67,6 +67,7 @@ def plot_metrics(df_all):
         title = 'Confirmed',
         mode = "number+delta",
         value = total_confirmed_cases[1],
+        number = {'valueformat': '2.4s'},
         delta = {'reference':total_confirmed_cases[0],'increasing':{'color':'red'}},
         domain = {'row': 0, 'column': 0}))
 
@@ -75,19 +76,27 @@ def plot_metrics(df_all):
         mode = "number+delta",
         value = total_recovered_cases[1],
         delta = {'reference':total_recovered_cases[0]},
+        number = {'valueformat': '2.03s'},
         domain = {'row': 0, 'column': 1}))
 
     fig.add_trace(go.Indicator(
         title = 'Deaths',
         mode = "number+delta",
         value = total_deaths[1],
-        delta = {'reference':total_deaths[0],'increasing':{'color':'red'}},
+        number = {"valueformat": '2.03s'},
+        delta = {'reference':total_deaths[0],'increasing':{'color':'red'},
+                 'valueformat': '2.03s'},
         domain = {'row': 0, 'column': 2}))
 
-    fig.update_layout(grid = {'rows': 1, 'columns': 3, 'pattern': "coupled"},
-                      title=today)
+    fig.update_layout(grid = {'rows': 1, 'columns': 3, 'pattern': "coupled"}, title=today,
+                     margin=dict(
+        l=20,
+        r=20
+    )
+                     )
     fig.write_html(os.path.join(cc.INCLUDES_DIR,"metrics.html"),
                     include_plotlyjs = False, full_html = False)
+
 
 def plot_continents(df, cases='Confirmed'):
     """Creates line chart to show continent trend

@@ -111,7 +111,7 @@ def plot_scatter_map(df,map_style='open-street-map',cases='Confirmed'):
     df = df.fillna(0)
     fig = px.scatter_mapbox(df, lat="latitude",lon="longitude",
         animation_frame='date_', animation_group='country', color='Continent',
-        hover_name='country',size=cases, size_max=50,zoom=1)
+        hover_name='country',size=cases, size_max=50,zoom=1, width=800, height=600)
     fig.update_layout(showlegend=False, mapbox_style='open-street-map')
     fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,'cases-'+ cases.lower()
                     + '-global.html'),include_plotlyjs = cc.PATH_TO_PLOTLY)

@@ -10,11 +10,11 @@ In order to generate the plots following steps should be followed after installi
 
 1. Clone this repository
 ```
-git clone https://github.com/umairacheema/covid-19
+git clone https://github.com/umairacheema/covid-19.git
 ```
 2. Clone John Hopkins University Data Repositorty
 ```
-git clone https://github.com/CSSEGISandData/COVID-19
+git clone https://github.com/CSSEGISandData/COVID-19.git
 ```
 3. Copy timeseries data folder from John Hopkins repository
 ```

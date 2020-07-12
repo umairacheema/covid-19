@@ -1,0 +1,4 @@
+numpy==1.19.0
+pandas==1.0.5
+plotly==4.8.2
+pycountry_convert==0.7.2

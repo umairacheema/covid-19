@@ -92,7 +92,7 @@ def preprocess_data(remove_cruise=True):
             continent = pc.country_alpha2_to_continent_code(
                                 pc.country_name_to_country_alpha2(country,
                                         cn_name_format="default"))
-        if continent is not 'Cruise':
+        if continent != 'Cruise':
             continent = pc.convert_continent_code_to_continent_name(continent)
         return continent
 

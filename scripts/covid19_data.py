@@ -73,7 +73,7 @@ def preprocess_data(remove_cruise=True):
 
         cruises = ['Diamond Princess', 'MS Zaandam']
         africa = ['Congo (Brazzaville)', 'Congo (Kinshasa)', 'Cote d\'Ivoire', 'Western Sahara']
-        asia = ['Korea, South', 'Taiwan*', 'Timor-Leste', 'West Bank and Gaza', 'Burma']
+        asia = ['Korea, South', 'Taiwan*', 'Timor-Leste', 'West Bank and Gaza', 'Burma','Summer Olympics 2020']        
         europe = ['Holy See', 'Kosovo']
         north_america = ['US']
 
@@ -95,7 +95,6 @@ def preprocess_data(remove_cruise=True):
         if continent != 'Cruise':
             continent = pc.convert_continent_code_to_continent_name(continent)
         return continent
-
 
     df_all['Continent'] = df_all['Country/Region'].apply(get_continents)
     df_all = df_all.fillna(0)

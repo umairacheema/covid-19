@@ -125,7 +125,7 @@ def plot_bubble_countries(df, countries, start_date='2020-03-11', filename='bubb
     df_subset = df_subset[(df_subset['Date']>=pd.to_datetime(start_date))]
     fig = px.scatter(df_subset, x='std_confirmed', y='population',size='std_deaths',text='country',
                  size_max=100,animation_group='country',animation_frame='date_',
-                 range_y=[1,df_subset['population'].max()+1e6],range_x=[1,df_subset['std_confirmed'].max()+1e6],
+                 range_y=[120e6,df_subset['population'].max()+1e6],range_x=[1,df_subset['std_confirmed'].max()+1e6],
                  color='country',log_x=True,log_y=True,
                  hover_data={'std_confirmed':':.2f','population':':.2f','std_deaths':':.2f'})
     fig.update_xaxes(title_text='Confirmed Cases per 100 Thousand People')

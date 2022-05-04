@@ -73,10 +73,17 @@ def preprocess_data(remove_cruise=True):
 
         cruises = ['Diamond Princess', 'MS Zaandam']
         africa = ['Congo (Brazzaville)', 'Congo (Kinshasa)', 'Cote d\'Ivoire', 'Western Sahara']
-        asia = ['Korea, South', 'Taiwan*', 'Timor-Leste', 'West Bank and Gaza', 'Burma','Summer Olympics 2020']        
+        asia = ['Afghanistan',
+                'Korea, South',
+                'Taiwan*', 
+                'Timor-Leste',
+                'West Bank and Gaza',
+                'Burma',
+                'Summer Olympics 2020',
+                'Winter Olympics 2022']        
         europe = ['Holy See', 'Kosovo']
         north_america = ['US']
-
+        antarctica = ['Antarctica']
 
         if country in africa:
             continent = 'AF'
@@ -88,11 +95,13 @@ def preprocess_data(remove_cruise=True):
             continent = 'AS'
         elif country in north_america:
             continent = 'NA'
+        elif country in antarctica:
+            continent = 'Antarctica'
         else:
             continent = pc.country_alpha2_to_continent_code(
                                 pc.country_name_to_country_alpha2(country,
                                         cn_name_format="default"))
-        if continent != 'Cruise':
+        if continent not in ('Cruise','Antarctica'):
             continent = pc.convert_continent_code_to_continent_name(continent)
         return continent
 

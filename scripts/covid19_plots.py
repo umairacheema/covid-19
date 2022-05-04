@@ -71,13 +71,6 @@ def plot_metrics(df_all):
         delta = {'reference':total_confirmed_cases[0],'increasing':{'color':'red'}},
         domain = {'row': 0, 'column': 0}))
 
-    fig.add_trace(go.Indicator(
-        title = 'Recovered',
-        mode = "number+delta",
-        value = total_recovered_cases[1],
-        delta = {'reference':total_recovered_cases[0]},
-        number = {'valueformat': '2.03s'},
-        domain = {'row': 0, 'column': 1}))
 
     fig.add_trace(go.Indicator(
         title = 'Deaths',

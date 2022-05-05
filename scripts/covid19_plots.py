@@ -157,12 +157,12 @@ def plot_3d_scatter(df,countries=None,filename='3d-scatter.html',date=None):
     df = df[(df['Date'] == pd.to_datetime(date))]
 
 
-    fig = px.scatter_3d(df, x='std_confirmed', y='std_recovered', z='std_deaths', color='Continent',
+    fig = px.scatter_3d(df, x='std_confirmed', y='population', z='std_deaths', color='Continent',
                    hover_data={'Continent':False,'country':True,'std_confirmed':':.3s',
-                   'std_recovered':':.3s','std_deaths':':.3s'})
+                   'population':':.3s','std_deaths':':.3s'})
     fig.update_layout(scene = dict(
                     xaxis_title='Confirmed Cases per 100 Thousand',
-                    yaxis_title='Recovered Cases per 100 Thousand',
+                    yaxis_title='Population',
                     zaxis_title='Deaths per 100 Thousand'),
                     margin=dict(r=20, b=10, l=10, t=10))
     fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,filename),

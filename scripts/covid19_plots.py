@@ -18,6 +18,7 @@ confirmed-deaths-global.html      - Interactive dual axis plot showing deaths
 """
 import os
 import errno
+import numpy as np
 import pandas as pd
 import covid19_paths as cc
 import plotly.express as px
@@ -125,7 +126,7 @@ def plot_bubble_countries(df, countries, start_date='2020-03-11', filename='bubb
     df_subset = df_subset[(df_subset['Date']>=pd.to_datetime(start_date))]
     fig = px.scatter(df_subset, x='std_confirmed', y='population',size='std_deaths',text='country',
                  size_max=100,animation_group='country',animation_frame='date_',
-                 range_y=[120e6,df_subset['population'].max()+1e6],range_x=[1,df_subset['std_confirmed'].max()+1e6],
+                 range_y=[120e6,df_subset['population'].max()*1.5],range_x=[1,df_subset['std_confirmed'].max()+1e6],
                  color='country',log_x=True,log_y=True,
                  hover_data={'std_confirmed':':.2f','population':':.2f','std_deaths':':.2f'})
     fig.update_xaxes(title_text='Confirmed Cases per 100 Thousand People')
@@ -146,6 +147,7 @@ def plot_3d_scatter(df,countries=None,filename='3d-scatter.html',date=None):
       date: A str with the date in YYYY-MM-DD format
            if not given uses the latest information
     """
+    df['log_pop'] = df['population'].apply(np.log)
     if countries is not None:
         df =  subset_countries(df, countries)
 
@@ -157,12 +159,12 @@ def plot_3d_scatter(df,countries=None,filename='3d-scatter.html',date=None):
     df = df[(df['Date'] == pd.to_datetime(date))]
 
 
-    fig = px.scatter_3d(df, x='std_confirmed', y='population', z='std_deaths', color='Continent',
+    fig = px.scatter_3d(df, x='std_confirmed', y='log_pop', z='std_deaths', color='Continent',
                    hover_data={'Continent':False,'country':True,'std_confirmed':':.3s',
-                   'population':':.3s','std_deaths':':.3s'})
+                   'log_pop':':.3s','std_deaths':':.3s'})
     fig.update_layout(scene = dict(
                     xaxis_title='Confirmed Cases per 100 Thousand',
-                    yaxis_title='Population',
+                    yaxis_title='Log(Population)',
                     zaxis_title='Deaths per 100 Thousand'),
                     margin=dict(r=20, b=10, l=10, t=10))
     fig.write_html(os.path.join(cc.INTERACTIVE_PLOTS_DIR,filename),
